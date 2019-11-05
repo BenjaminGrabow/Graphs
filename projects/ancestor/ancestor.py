@@ -1,31 +1,47 @@
-from util import Stack
+from util import Queue
 
 def earliest_ancestor(ancestors, starting_node):
-   # create a queue
+
     q = Queue()
-    # enqueue a list holding the starting vertex id
-    q.enqueue([starting_node])
-    # created an empty visited set
-    visited = set()
-    # while the queue is not empty
+
+    q.enqueue(starting_node)
+
+    visited = []
     while q.size() > 0:
-        # dequeue to the path
-        path = q.dequeue()
-        # set a vert to the last item in the path
-        vert = path[-1]
-        # if vert is not in visited
-        if vert not in visited:
-            # add vert to visited set
-            visited.add(vert)
-            # if vert is equal to endWord
-            # if vert == endWord:               // if vert has now parent return vert
-                # return path
-                # return path
-            # loop over next vert in vertices at the index of vert
-            for next_vert in get_neighbors(vert):
-                # set a new path equal to a new list of the path (copy)
-                new_path = list(path)
-                # append next vert to new path
-                new_path.append(next_vert)
-                # enqueue the new path
-                q.enqueue(new_path)
+
+        vert = q.dequeue()
+
+        for item in ancestors:
+          if vert == item[1]:
+            q.enqueue(item[0])
+            visited.append(item[0])
+    
+    if visited == []:
+      return -1
+
+    print(visited)
+
+print(earliest_ancestor([(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)], 3))
+
+#   '''
+#        10
+#      /
+#     1   2   4  11
+#      \ /   / \ /
+#       3   5   8
+#        \ / \   \
+#         6   7   9
+#     '''
+#     def test_earliest_ancestor(self):
+#         test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
+#         self.assertEqual(earliest_ancestor(test_ancestors, 1), 10)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 2), -1)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 3), 10)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 4), -1)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 5), 4)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 6), 10)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 7), 4)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 8), 4)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 9), 4)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 10), -1)
+#         self.assertEqual(earliest_ancestor(test_ancestors, 11), -1)
