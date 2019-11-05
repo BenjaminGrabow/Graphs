@@ -11,17 +11,25 @@ def earliest_ancestor(ancestors, starting_node):
 
         vert = q.dequeue()
 
+        tempArr = []
         for item in ancestors:
           if vert == item[1]:
-            q.enqueue(item[0])
-            visited.append(item[0])
+            tempArr.append(item[0])
+          
+        if len(tempArr) == 1:
+          q.enqueue(tempArr[0])
+          visited.append(tempArr[0])          
+        if len(tempArr) > 1:
+          tempArr.sort()
+          q.enqueue(tempArr[0])
+          visited.append(tempArr[0])
     
     if visited == []:
       return -1
+    
+    return visited[-1]
 
-    print(visited)
-
-print(earliest_ancestor([(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)], 3))
+# print(earliest_ancestor([(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)], 1))
 
 #   '''
 #        10
